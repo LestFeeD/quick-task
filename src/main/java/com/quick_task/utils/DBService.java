@@ -30,9 +30,6 @@ public abstract class DBService {
         configuration.addAnnotatedClass(CommentTask.class);
         configuration.addAnnotatedClass(Priority.class);
         configuration.addAnnotatedClass(Project.class);
-        configuration.addAnnotatedClass(RoleProjectTask.class);
-        configuration.addAnnotatedClass(RoleUserProject.class);
-        configuration.addAnnotatedClass(RoleUserTask.class);
         configuration.addAnnotatedClass(Status.class);
         configuration.addAnnotatedClass(StatusProject.class);
         configuration.addAnnotatedClass(StatusTask.class);

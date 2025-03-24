@@ -220,14 +220,14 @@ public class ProjectServiceImpl implements ProjectService {
 
 
                 if (optionalStatusProject.isEmpty()) {
-                    // Это первый статус задачи в проекте, создаем связку с null
+                    // This is the first task status in the project, creating a bundle with null
                     statusProject.setIdLeftProjectStatus(null);
                     statusProject.setIdRightProjectStatus(null);
 
                 } else {
                     logger.info("Found leftStatus: {}", optionalStatusProject.get().getIdLeftProjectStatus());
 
-                    // Если предыдущий статус найден, связываем новый статус с ним
+                    // If the previous status is found, we associate the new status with it.
                     StatusProject previousStatusProject = optionalStatusProject.get();
                     statusProject.setIdLeftProjectStatus(previousStatusProject);
                     previousStatusProject.setIdRightProjectStatus(statusProject);
@@ -312,7 +312,6 @@ public class ProjectServiceImpl implements ProjectService {
         }, taskExecutor);
     }
 
-    //вместе с этим методом на фронтенде будет вызываться: вывод комментариев, вывод задач по проекту
     @Override
     @Async
     public CompletableFuture<InformationProjectDtoResponse> getInformationProject(Long idProject) throws SQLException {
@@ -440,7 +439,6 @@ public class ProjectServiceImpl implements ProjectService {
         }, taskExecutor);
     }
 
-    //TODO нужно менять в рамках пользователя
     @Async
     @Override
     public CompletableFuture<List<StatusProjectBoardDtoResponse>> changeStatusPosition( UpdateChangePositionProject dtoRequest) throws SQLException {
@@ -474,9 +472,9 @@ public class ProjectServiceImpl implements ProjectService {
                 statusProject.setStatus(statusDAO.findById(dtoRequest.getNewStatusId()));
             }
 
-            // Заменяем старую позицию задачи
+            // Replacing the old issue position
             replaceOldTaskPosition(statusProject);
-            // Устанавливаем новую левую задачу
+            // Setting a new left task
             if (optionalNewLeftProject.isPresent()) {
                 logger.info("leftStatus ID: {}", optionalNewLeftProject.get().getIdStatusProject());
                 StatusProject newLeftProject = optionalNewLeftProject.get();
@@ -484,10 +482,10 @@ public class ProjectServiceImpl implements ProjectService {
                 statusProject.setIdLeftProjectStatus(newLeftProject);
 
             } else {
-                statusProject.setIdLeftProjectStatus(null); // Задача будет первой
+                statusProject.setIdLeftProjectStatus(null);
 
             }
-            // Устанавливаем новую правую задачу
+            // Setting a new right-hand task
             if (optionalNewRightProject.isPresent()) {
                 logger.info("rightStatus ID: {}", optionalNewRightProject.get().getIdStatusProject());
 
@@ -496,7 +494,7 @@ public class ProjectServiceImpl implements ProjectService {
                 statusProject.setIdRightProjectStatus(newRightRight);
 
             } else {
-                statusProject.setIdRightProjectStatus(null); // Задача будет последней
+                statusProject.setIdRightProjectStatus(null);
 
             }
             statusProjectDAO.update(statusProject);
@@ -589,7 +587,6 @@ public class ProjectServiceImpl implements ProjectService {
 
             StatusProject rightStatus = statusProject.getIdRightProjectStatus();
 
-            // Если у левого, удаляемый справа не последний, то ставим его ему
             if (leftStatus != null) {
                 logger.info("leftStatus id: {}", leftStatus.getIdStatusProject());
 
@@ -600,7 +597,6 @@ public class ProjectServiceImpl implements ProjectService {
                 }
                 statusProjectDAO.update(leftStatus);
             }
-            // Если у правого, удаляемый левый не последний, то ставим его ему
 
             if (rightStatus != null) {
                 logger.info("rightStatus id: {}", rightStatus.getIdStatusProject());
@@ -611,7 +607,7 @@ public class ProjectServiceImpl implements ProjectService {
                 } else {
                 rightStatus.setIdLeftProjectStatus(null);
                 }
-                statusProjectDAO.update(rightStatus); // Сохраняем изменения
+                statusProjectDAO.update(rightStatus);
             }
 
             statusProjectDAO.delete(statusProject.getIdStatusProject());

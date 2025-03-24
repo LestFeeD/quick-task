@@ -57,8 +57,7 @@ public class Project {
     @OneToMany(mappedBy = "project",  cascade = CascadeType.PERSIST)
     private Set<CommentProject> commentProjectSet;
 
-    @OneToMany(mappedBy = "project",  cascade = CascadeType.PERSIST)
-    private Set<RoleUserProject> roleUserProjectSet;
+
 
 
 
@@ -76,7 +75,6 @@ public class Project {
         s.append(", priority=").append(priority);
         s.append(", projectParticipantsSet=").append(projectParticipantsSet);
         s.append(", commentProjectSet=").append(commentProjectSet);
-        s.append(", roleUserProjectSet=").append(roleUserProjectSet);
         s.append('}');
 
         return s.toString();
@@ -87,12 +85,13 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return Objects.equals(idProject, project.idProject) && Objects.equals(nameProject, project.nameProject) && Objects.equals(startDate, project.startDate) && Objects.equals(endDate, project.endDate) && Objects.equals(descriptionProject, project.descriptionProject) && Objects.equals(statusProjectSet, project.statusProjectSet) && Objects.equals(priority, project.priority) && Objects.equals(projectParticipantsSet, project.projectParticipantsSet) && Objects.equals(commentProjectSet, project.commentProjectSet)
-                && Objects.equals(roleUserProjectSet, project.roleUserProjectSet );
+        return Objects.equals(idProject, project.idProject) && Objects.equals(nameProject, project.nameProject) && Objects.equals(startDate, project.startDate) && Objects.equals(endDate, project.endDate) && Objects.equals(descriptionProject, project.descriptionProject)
+                && Objects.equals(statusProjectSet, project.statusProjectSet) && Objects.equals(priority, project.priority)
+                && Objects.equals(projectParticipantsSet, project.projectParticipantsSet) && Objects.equals(commentProjectSet, project.commentProjectSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProject, nameProject, startDate, endDate, descriptionProject, statusProjectSet, priority, projectParticipantsSet, commentProjectSet, roleUserProjectSet);
+        return Objects.hash(idProject, nameProject, startDate, endDate, descriptionProject, statusProjectSet, priority, projectParticipantsSet, commentProjectSet);
     }
 }

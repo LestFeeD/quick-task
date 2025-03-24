@@ -40,10 +40,6 @@ public class Task {
     @JsonProperty("commentTaskSet")
     private Set<CommentTask> commentTaskSet;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private Set<RoleUserTask> roleUserTasks;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "tag_task",
@@ -77,7 +73,6 @@ public class Task {
         s.append(", endDate=").append(endDate);
         s.append(", project=").append(project);
         s.append(", commentTaskSet=").append(commentTaskSet);
-        s.append(", roleUserTasks=").append(roleUserTasks);
         s.append(", tagSet=").append(tagSet);
         s.append(", taskParticipantsSet=").append(taskParticipantsSet);
         s.append(", statusTasks=").append(statusTasks);
@@ -94,13 +89,13 @@ public class Task {
         return Objects.equals(idTask, task.idTask) && Objects.equals(nameTask, task.nameTask)
                 && Objects.equals(project, task.project)  && Objects.equals(descriptionTask, task.descriptionTask)
                 && Objects.equals(startDate, task.startDate) && Objects.equals(endDate, task.endDate)
-                && Objects.equals(commentTaskSet, task.commentTaskSet) && Objects.equals(roleUserTasks, task.roleUserTasks)
+                && Objects.equals(commentTaskSet, task.commentTaskSet)
                 && Objects.equals(tagSet, task.tagSet) && Objects.equals(taskParticipantsSet, task.taskParticipantsSet);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idTask, nameTask, descriptionTask, startDate, endDate, project, commentTaskSet,
-                roleUserTasks, tagSet, taskParticipantsSet);
+                tagSet, taskParticipantsSet);
     }
 }

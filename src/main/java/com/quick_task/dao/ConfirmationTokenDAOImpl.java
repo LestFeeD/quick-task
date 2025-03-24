@@ -36,7 +36,7 @@ public class ConfirmationTokenDAOImpl implements ConfirmationTokenDAO, Dao{
                 .getCurrentSession()
                 .createNativeQuery("SELECT id_confirmation_token FROM confirmation_token " +
                         "WHERE expires_at < :now AND confirmed_at is null", Long.class)
-                .setParameter(":now", timestamp)
+                .setParameter("now", timestamp)
                 .stream()
                 .collect(Collectors.toSet());
     }

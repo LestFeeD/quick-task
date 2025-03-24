@@ -357,8 +357,10 @@ public class WebUserServiceImpl implements WebUserService {
 
     }
 
+    @Async
     @Scheduled(fixedRate = 900000,  initialDelay = 5000)
     public void removeExpiredUsers() {
+        logger.debug("Start work delete user method");
         Transaction transaction = DBService.getTransaction();
         try {
             WebUserDAO webUserDAO = DaoFactory.getDao(WebUserDAO.class);
@@ -379,6 +381,8 @@ public class WebUserServiceImpl implements WebUserService {
                 if (userId != null && webUser.getTemporaryMail() != null) {
                     confirmationTokenDAO.deleteById(tokenId);
                     webUserDAO.deleteById(userId);
+                    logger.debug("Delete users");
+
                 }
             }
             transaction.commit();

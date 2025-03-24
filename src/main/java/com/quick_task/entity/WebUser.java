@@ -49,13 +49,6 @@ public class WebUser {
     @JsonIgnore
     private Set<CommentTask> commentTaskSet;
 
-    @OneToMany(mappedBy = "webUser", cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private Set<RoleUserProject> roleUserProjectSet;
-
-    @OneToMany(mappedBy = "webUser", cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private Set<RoleUserTask> roleUserTasks;
 
     @OneToMany(mappedBy = "webUser", cascade = CascadeType.PERSIST)
     @JsonIgnore
@@ -87,8 +80,6 @@ public class WebUser {
         s.append(", projectParticipantsSet=").append(projectParticipantsSet);
         s.append(", commentProjectSet=").append(commentProjectSet);
         s.append(", commentTaskSet=").append(commentTaskSet);
-        s.append(", roleUserProjectSet=").append(roleUserProjectSet);
-        s.append(", roleUserTasks=").append(roleUserTasks);
         s.append(", taskParticipantsSet=").append(taskParticipantsSet);
         s.append(", prioritySet=").append(prioritySet);
         s.append(", confirmationTokens=").append(confirmationTokens);
@@ -108,7 +99,6 @@ public class WebUser {
                 && Objects.equals(temporaryMail, webUser.temporaryMail)
                 && Objects.equals(passwordUser, webUser.passwordUser) && Objects.equals(projectParticipantsSet, webUser.projectParticipantsSet)
                 && Objects.equals(commentProjectSet, webUser.commentProjectSet) && Objects.equals(commentTaskSet, webUser.commentTaskSet)
-                && Objects.equals(roleUserProjectSet, webUser.roleUserProjectSet) && Objects.equals(roleUserTasks, webUser.roleUserTasks)
                 && Objects.equals(activated, webUser.activated) && Objects.equals(taskParticipantsSet, webUser.taskParticipantsSet)
                 && Objects.equals(statusSet, webUser.statusSet)
                 && Objects.equals(prioritySet, webUser.prioritySet)  && Objects.equals(confirmationTokens, webUser.confirmationTokens);
@@ -116,7 +106,6 @@ public class WebUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idWebUser, nameUser, mailUser, temporaryMail, passwordUser, activated, projectParticipantsSet, commentProjectSet, commentTaskSet, roleUserProjectSet,
-                roleUserTasks, taskParticipantsSet, statusSet, prioritySet, confirmationTokens);
+        return Objects.hash(idWebUser, nameUser, mailUser, temporaryMail, passwordUser, activated, projectParticipantsSet, commentProjectSet, commentTaskSet, taskParticipantsSet, statusSet, prioritySet, confirmationTokens);
     }
 }

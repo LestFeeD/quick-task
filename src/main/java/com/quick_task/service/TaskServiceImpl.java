@@ -271,11 +271,11 @@ public class TaskServiceImpl implements TaskService
                 changeTask.setStatus(statusDAO.findById(dtoRequest.getNewStatusId()));
             }
 
-            // Заменяем старую позицию задачи
+            // Replacing the old issue position
             replaceOldTaskPosition(changeTask);
 
 
-            // Устанавливаем новую левую задачу
+            // Setting a new left task
             if (optionalNewLeftTask.isPresent()) {
                 logger.info("leftStatus ID: {}", optionalNewLeftTask.get().getIdStatusTask());
                 StatusTask newLeftTask = optionalNewLeftTask.get();
@@ -283,11 +283,11 @@ public class TaskServiceImpl implements TaskService
                 changeTask.setIdLeftTaskStatus(newLeftTask);
 
             } else {
-                changeTask.setIdLeftTaskStatus(null); // Задача будет первой
+                changeTask.setIdLeftTaskStatus(null); // The task will be the first one
 
             }
 
-            // Устанавливаем новую правую задачу
+            // Setting a new right-hand task
             if (optionalNewRightTask.isPresent()) {
                 logger.info("rightStatus ID: {}", optionalNewRightTask.get().getIdStatusTask());
                 StatusTask newRightTask = optionalNewRightTask.get();
@@ -463,7 +463,8 @@ public class TaskServiceImpl implements TaskService
         }
     }, taskExecutor);
     }
-@Async
+
+    @Async
     @Override
     public CompletableFuture<TaskDtoResponse> updateTask(Long idTask, UpdateTaskDtoRequest dtoRequest) {
         return CompletableFuture.supplyAsync(() -> {
@@ -510,7 +511,7 @@ public class TaskServiceImpl implements TaskService
 
                 if (dtoRequest.getDescriptionTask() != null) {
                     task.setDescriptionTask(dtoRequest.getDescriptionTask());
-                } //TODO: так же проверить на не пустой
+                }
                 if (dtoRequest.getIdStatus() != null) {
                     Status status = statusDAO.findById(dtoRequest.getIdStatus());
                     logger.info("found status: ID = {}, name = {}", status.getIdStatus(), status.getNameStatus());
@@ -563,7 +564,7 @@ public class TaskServiceImpl implements TaskService
             StatusTask leftStatus = statusTask.getIdLeftTaskStatus();
             StatusTask rightStatus = statusTask.getIdRightTaskStatus();
 
-            // Если у левого, удаляемый справа не последний, то ставим его ему
+            // If the one on the left that is being deleted on the right is not the last one, then we put it to him.
             if (leftStatus != null) {
                 if(rightStatus != null) {
                     leftStatus.setIdRightTaskStatus(rightStatus);
@@ -572,7 +573,7 @@ public class TaskServiceImpl implements TaskService
                 }
                 statusTaskDAO.update(leftStatus);
             }
-            // Если у правого, удаляемый левый не последний, то ставим его ему
+            // If the one on the right is not the last one to be deleted, then we put it to him.
 
             if (rightStatus != null) {
                 if(leftStatus != null) {
@@ -581,7 +582,7 @@ public class TaskServiceImpl implements TaskService
                 } else {
                     rightStatus.setIdRightTaskStatus(null);
                 }
-                statusTaskDAO.update(rightStatus); // Сохраняем изменения
+                statusTaskDAO.update(rightStatus);
             }
 
             statusTaskDAO.delete(statusTask.getIdStatusTask());
@@ -594,8 +595,6 @@ public class TaskServiceImpl implements TaskService
             task.getStatusTasks().clear();
             task.getTaskParticipantsSet().clear();
             task.getCommentTaskSet().clear();
-            task.getRoleUserTasks().clear();
-
             taskDao.deleteById(idTask);
         }
         transaction.commit();
@@ -636,7 +635,7 @@ public class TaskServiceImpl implements TaskService
         Optional<StatusTask> optionalOldLeftTask = Optional.ofNullable(changeTask.getIdLeftTaskStatus());
         Optional<StatusTask> optionalOldRightTask = Optional.ofNullable(changeTask.getIdRightTaskStatus());
 
-        // Обновляем старую левую задачу
+        // Updating the old left issue
         optionalOldLeftTask.ifPresent(oldLeftTask -> {
             oldLeftTask.setIdRightTaskStatus(optionalOldRightTask.orElse(null));
             try {
@@ -646,7 +645,7 @@ public class TaskServiceImpl implements TaskService
             }
         });
 
-        // Обновляем старую правую задачу
+        // Updating the old right-hand issue
         optionalOldRightTask.ifPresent(oldRightTask -> {
             oldRightTask.setIdLeftTaskStatus(optionalOldLeftTask.orElse(null));
             try {
