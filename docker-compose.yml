@@ -1,0 +1,26 @@
+volumes:
+  pg_task:
+
+services:
+  quick-task:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1Q2q3q4q5q
+      - POSTGRES_DB=quick-task
+      - DOCKER_BUILDKIT=1
+    volumes:
+      - pg_task:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5433:5432"
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - quick-task
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://quick-task:5432/quick-task'
+      JAVA_OPTS: '-Xmx512m'
