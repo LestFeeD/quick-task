@@ -8,7 +8,7 @@ _________
 ## Swagger REST API docs:
 http://localhost:8080/swagger-ui/index.html#/
 
-Models
+## Models
 ______
 + Status
 + StatusRole
@@ -25,19 +25,19 @@ ______
 + WebUser
 + ConfirmationToken
 
-Configure  Application Properties
+## Configure  Application Properties
 ________
-spring.jpa.hibernate.ddl-auto=validate
++ spring.jpa.hibernate.ddl-auto=validate
 
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=YOURUSERNAME
-spring.mail.password=YOURPASSWORD
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
++ spring.mail.host=smtp.gmail.com
++ spring.mail.port=587
++ spring.mail.username=YOURUSERNAME
++ spring.mail.password=YOURPASSWORD
++ spring.mail.properties.mail.smtp.auth=true
++ spring.mail.properties.mail.smtp.starttls.enable=true
 
-spring.security.oauth2.client.registration.google.client-id =YOURID
-spring.security.oauth2.client.registration.google.client-secret=YOURIDSECRET
++ spring.security.oauth2.client.registration.google.client-id =YOURID
++ spring.security.oauth2.client.registration.google.client-secret=YOURIDSECRET
 
-auth.token.jwtSecret=YOURJWTSECRET
-auth.token.expiration=YOURTIME
++ auth.token.jwtSecret=YOURJWTSECRET
++ auth.token.expiration=YOURTIME
